@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "airdrop-tfg"
+version = "2.0.0"
+description = "Gestion autonoma de un enjambre de drones de reparto (TFG, UPC)"
+requires-python = ">=3.11"
+
+# legacy/ queda fuera a proposito: es un archivo historico, no un paquete.
+[tool.setuptools]
+packages = [
+    "core",
+    "airdrop",
+    "airdrop.api",
+    "airdrop.domain",
+    "airdrop.drone",
+    "airdrop.swarm",
+    "research",
+    "research.simulacion",
+]
+
+[tool.setuptools.package-data]
+airdrop = ["data/*.json", "web/*", "api/*.sql"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

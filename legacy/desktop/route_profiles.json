@@ -1,0 +1,166 @@
+{
+  "profiles": [
+    {
+      "name": "Ruta1-Castelldefels",
+      "takeOffAlt": 8.0,
+      "speed": 7.0,
+      "hub": {
+        "lat": 41.28294661468285,
+        "lon": 1.9860807264599316,
+        "alt": 20.0
+      },
+      "parkings": [
+        {
+          "name": "Central",
+          "lat": 41.283720590600794,
+          "lon": 1.9850507581982129,
+          "alt": 0.0
+        }
+      ],
+      "destinations": [
+        {
+          "name": "Castillo",
+          "lat": 41.284412643159115,
+          "lon": 1.9782211905846054,
+          "alt": 15.0
+        },
+        {
+          "name": "UPC",
+          "lat": 41.276446629191945,
+          "lon": 1.9888945592449545,
+          "alt": 15.0
+        },
+        {
+          "name": "Playa",
+          "lat": 41.2656,
+          "lon": 1.9922,
+          "alt": 5.0
+        },
+        {
+          "name": "Ayuntamiento",
+          "lat": 41.2809,
+          "lon": 1.9761,
+          "alt": 10.0
+        },
+        {
+          "name": "Anec_Blau",
+          "lat": 41.2813,
+          "lon": 1.9912,
+          "alt": 15.0
+        },
+        {
+          "name": "Poligono",
+          "lat": 41.287,
+          "lon": 2.0,
+          "alt": 10.0
+        }
+      ],
+      "routes": [
+        {
+          "name": "Ruta-Castillo",
+          "parking": "Central",
+          "destination": "Castillo",
+          "intermediates": [
+            {
+              "lat": 41.28572254750057,
+              "lon": 1.9806342350899797,
+              "alt": 20.0
+            }
+          ]
+        },
+        {
+          "name": "Ruta-UPC",
+          "parking": "Central",
+          "destination": "UPC",
+          "intermediates": []
+        }
+      ]
+    },
+    {
+      "name": "Ruta2-Gava",
+      "takeOffAlt": 8.0,
+      "speed": 7.0,
+      "hub": {
+        "lat": 41.303942092087674,
+        "lon": 2.0096737285595907,
+        "alt": 15.0
+      },
+      "parkings": [
+        {
+          "name": "Central",
+          "lat": 41.303506866699585,
+          "lon": 2.0103067298871053,
+          "alt": 0.0
+        }
+      ],
+      "destinations": [
+        {
+          "name": "SAFA",
+          "lat": 41.3080863096115,
+          "lon": 2.0034986926860086,
+          "alt": 30.0
+        },
+        {
+          "name": "Campo-Futbol",
+          "lat": 41.304684136121914,
+          "lon": 1.9960209046492707,
+          "alt": 5.0
+        }
+      ],
+      "routes": [
+        {
+          "name": "Ruta-Futbol",
+          "parking": "Central",
+          "destination": "Campo-Futbol",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-SAFA",
+          "parking": "Central",
+          "destination": "SAFA",
+          "intermediates": []
+        }
+      ]
+    },
+    {
+      "name": "Ruta2-Castelldefels",
+      "takeOffAlt": 8.0,
+      "speed": 7.0,
+      "hub": {
+        "lat": 41.286284320261736,
+        "lon": 1.9878080690655224,
+        "alt": 15.0
+      },
+      "parkings": [
+        {
+          "name": "estacion",
+          "lat": 41.28647780520486,
+          "lon": 1.987293084934663,
+          "alt": 15.0
+        }
+      ],
+      "destinations": [
+        {
+          "name": "canal",
+          "lat": 41.279898995273015,
+          "lon": 1.9924321974071972,
+          "alt": 30.0
+        }
+      ],
+      "routes": [
+        {
+          "name": "ruta-canal",
+          "parking": "estacion",
+          "destination": "canal",
+          "intermediates": [
+            {
+              "lat": 41.28363273941635,
+              "lon": 1.9919675882902652,
+              "alt": 25.0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

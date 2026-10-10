@@ -1,0 +1,5 @@
+# SOLO DOCUMENTAL. No se instala.
+#
+# Lo que haria falta para revivir la aplicacion de escritorio archivada en
+# legacy/. Ver legacy/README.md: es codigo congelado y no se mantiene.
+PySide6>=6.5.0

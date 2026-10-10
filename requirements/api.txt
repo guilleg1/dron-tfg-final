@@ -1,0 +1,10 @@
+# Portal web. Es lo que instala el despliegue en Railway.
+-r core.txt
+
+# fastapi >=0.115 es imprescindible para ser compatible con starlette 1.x
+# (las versiones antiguas usaban un on_startup que starlette ya no acepta).
+fastapi>=0.115
+uvicorn[standard]>=0.30
+sqlalchemy>=2.0
+psycopg2-binary>=2.9
+geopy>=2.4

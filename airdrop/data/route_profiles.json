@@ -1,0 +1,371 @@
+{
+  "profiles": [
+    {
+      "name": "Ruta1-Castelldefels",
+      "takeOffAlt": 8.0,
+      "speed": 7.0,
+      "hub": {
+        "lat": 41.28294661468285,
+        "lon": 1.9860807264599316,
+        "alt": 20.0
+      },
+      "parkings": [
+        {
+          "name": "Central",
+          "lat": 41.283720590600794,
+          "lon": 1.9850507581982129,
+          "alt": 0.0
+        }
+      ],
+      "destinations": [
+        {
+          "name": "Castillo",
+          "lat": 41.284412643159115,
+          "lon": 1.9782211905846054,
+          "alt": 15.0
+        },
+        {
+          "name": "UPC",
+          "lat": 41.276446629191945,
+          "lon": 1.9888945592449545,
+          "alt": 15.0
+        },
+        {
+          "name": "Playa",
+          "lat": 41.2656,
+          "lon": 1.9922,
+          "alt": 5.0
+        },
+        {
+          "name": "Ayuntamiento",
+          "lat": 41.2809,
+          "lon": 1.9761,
+          "alt": 10.0
+        },
+        {
+          "name": "Anec_Blau",
+          "lat": 41.2813,
+          "lon": 1.9912,
+          "alt": 15.0
+        },
+        {
+          "name": "Poligono",
+          "lat": 41.287,
+          "lon": 2.0,
+          "alt": 10.0
+        }
+      ],
+      "routes": [
+        {
+          "name": "Ruta-Castillo",
+          "parking": "Central",
+          "destination": "Castillo",
+          "intermediates": [
+            {
+              "lat": 41.28572254750057,
+              "lon": 1.9806342350899797,
+              "alt": 20.0
+            }
+          ]
+        },
+        {
+          "name": "Ruta-UPC",
+          "parking": "Central",
+          "destination": "UPC",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-Playa",
+          "parking": "Central",
+          "destination": "Playa",
+          "intermediates": [
+            {
+              "lat": 41.2793522,
+              "lon": 1.9892505,
+              "alt": 20.0
+            },
+            {
+              "lat": 41.2739142,
+              "lon": 1.9912904,
+              "alt": 20.0
+            },
+            {
+              "lat": 41.2694303,
+              "lon": 1.9918678,
+              "alt": 20.0
+            }
+          ]
+        },
+        {
+          "name": "Ruta-Anec_Blau",
+          "parking": "Central",
+          "destination": "Anec_Blau",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-Ayuntamiento",
+          "parking": "Central",
+          "destination": "Ayuntamiento",
+          "intermediates": [
+            {
+              "lat": 41.2823025,
+              "lon": 1.9816682,
+              "alt": 20.0
+            }
+          ]
+        },
+        {
+          "name": "Ruta-Poligono",
+          "parking": "Central",
+          "destination": "Poligono",
+          "intermediates": [
+            {
+              "lat": 41.2803356,
+              "lon": 1.989443,
+              "alt": 20.0
+            },
+            {
+              "lat": 41.2840378,
+              "lon": 1.9966789,
+              "alt": 20.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ruta2-Gava",
+      "takeOffAlt": 8.0,
+      "speed": 7.0,
+      "hub": {
+        "lat": 41.303942092087674,
+        "lon": 2.0096737285595907,
+        "alt": 15.0
+      },
+      "parkings": [
+        {
+          "name": "Estacion",
+          "lat": 41.303506866699585,
+          "lon": 2.0103067298871053,
+          "alt": 0.0
+        }
+      ],
+      "destinations": [
+        {
+          "name": "SAFA",
+          "lat": 41.3080863096115,
+          "lon": 2.0034986926860086,
+          "alt": 30.0
+        },
+        {
+          "name": "Campo-Futbol",
+          "lat": 41.304684136121914,
+          "lon": 1.9960209046492707,
+          "alt": 5.0
+        },
+        {
+          "name": "Ajuntament",
+          "lat": 41.3040384,
+          "lon": 1.9989406,
+          "alt": 15.0
+        },
+        {
+          "name": "Placa-Major",
+          "lat": 41.3051595,
+          "lon": 2.0054313,
+          "alt": 15.0
+        },
+        {
+          "name": "Mercat",
+          "lat": 41.3096417,
+          "lon": 2.0021345,
+          "alt": 10.0
+        },
+        {
+          "name": "Parc-Calamot",
+          "lat": 41.2982224,
+          "lon": 2.0001404,
+          "alt": 5.0
+        }
+      ],
+      "routes": [
+        {
+          "name": "Ruta-Futbol",
+          "parking": "Estacion",
+          "destination": "Campo-Futbol",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-SAFA",
+          "parking": "Estacion",
+          "destination": "SAFA",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-Ajuntament",
+          "parking": "Estacion",
+          "destination": "Ajuntament",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-Placa-Major",
+          "parking": "Estacion",
+          "destination": "Placa-Major",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-Mercat",
+          "parking": "Estacion",
+          "destination": "Mercat",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-Parc-Calamot",
+          "parking": "Estacion",
+          "destination": "Parc-Calamot",
+          "intermediates": []
+        }
+      ]
+    },
+    {
+      "name": "DroneLab-EETAC",
+      "takeOffAlt": 2.0,
+      "speed": 2.0,
+      "hub": {
+        "lat": 41.2763997,
+        "lon": 1.9887217,
+        "alt": 3.0
+      },
+      "parkings": [
+        {
+          "name": "Plataforma",
+          "lat": 41.2764176,
+          "lon": 1.9886769,
+          "alt": 2.0
+        }
+      ],
+      "destinations": [
+        {
+          "name": "Punto-A",
+          "lat": 41.2764492,
+          "lon": 1.9888141,
+          "alt": 2.0
+        },
+        {
+          "name": "Punto-B",
+          "lat": 41.276386,
+          "lon": 1.9885398,
+          "alt": 2.0
+        },
+        {
+          "name": "Punto-C",
+          "lat": 41.2763363,
+          "lon": 1.9887726,
+          "alt": 2.0
+        }
+      ],
+      "routes": [
+        {
+          "name": "Ruta-Punto-A",
+          "parking": "Plataforma",
+          "destination": "Punto-A",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-Punto-B",
+          "parking": "Plataforma",
+          "destination": "Punto-B",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-Punto-C",
+          "parking": "Plataforma",
+          "destination": "Punto-C",
+          "intermediates": []
+        }
+      ]
+    },
+    {
+      "name": "Ruta3-Viladecans",
+      "takeOffAlt": 8.0,
+      "speed": 7.0,
+      "hub": {
+        "lat": 41.31433,
+        "lon": 2.0152,
+        "alt": 15.0
+      },
+      "parkings": [
+        {
+          "name": "Atrium",
+          "lat": 41.3140537,
+          "lon": 2.0138071,
+          "alt": 0.0
+        }
+      ],
+      "destinations": [
+        {
+          "name": "Ajuntament",
+          "lat": 41.3160278,
+          "lon": 2.0200814,
+          "alt": 15.0
+        },
+        {
+          "name": "Hospital",
+          "lat": 41.3112291,
+          "lon": 2.0161148,
+          "alt": 20.0
+        },
+        {
+          "name": "Estacio",
+          "lat": 41.309589,
+          "lon": 2.0273765,
+          "alt": 10.0
+        },
+        {
+          "name": "Parc-Torre-roja",
+          "lat": 41.3203615,
+          "lon": 2.021342,
+          "alt": 5.0
+        },
+        {
+          "name": "Can-Calderon",
+          "lat": 41.322121,
+          "lon": 2.028983,
+          "alt": 10.0
+        }
+      ],
+      "routes": [
+        {
+          "name": "Ruta-Ajuntament",
+          "parking": "Atrium",
+          "destination": "Ajuntament",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-Hospital",
+          "parking": "Atrium",
+          "destination": "Hospital",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-Estacio",
+          "parking": "Atrium",
+          "destination": "Estacio",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-Parc-Torre-roja",
+          "parking": "Atrium",
+          "destination": "Parc-Torre-roja",
+          "intermediates": []
+        },
+        {
+          "name": "Ruta-Can-Calderon",
+          "parking": "Atrium",
+          "destination": "Can-Calderon",
+          "intermediates": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "scenarios": [
+    {
+      "name": "Castelldefels",
+      "route_profile_name": "Ruta1-Castelldefels",
+      "parking_lat": 41.283720590600794,
+      "parking_lon": 1.9850507581982129,
+      "active": true,
+      "geofence_radius_m": 2500.0,
+      "pad_separation_m": 25.0,
+      "alt_base_m": 60.0
+    },
+    {
+      "name": "Gava",
+      "route_profile_name": "Ruta2-Gava",
+      "parking_lat": 41.303506866699585,
+      "parking_lon": 2.0103067298871053,
+      "pad_separation_m": 25.0
+    },
+    {
+      "name": "Viladecans",
+      "route_profile_name": "Ruta3-Viladecans",
+      "parking_lat": 41.3140537,
+      "parking_lon": 2.0138071,
+      "geofence_radius_m": 2000.0,
+      "pad_separation_m": 25.0
+    },
+    {
+      "name": "DroneLab EETAC",
+      "route_profile_name": "DroneLab-EETAC",
+      "parking_lat": 41.2764176,
+      "parking_lon": 1.9886769,
+      "pad_spacing_m": 1.5,
+      "alt_base_m": 2.0,
+      "alt_step_m": 1.0,
+      "alt_ceiling_m": 4.0,
+      "geofence_radius_m": 15.0,
+      "separation_min_m": 2.0,
+      "takeoff_gap_s": 5.0,
+      "waypoint_tolerance_m": 0.5,
+      "delivery_pause_s": 3.0
+    }
+  ]
+}

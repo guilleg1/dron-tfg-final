@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drone Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body, #map { width: 100%; height: 100%; background: #1e1e1e; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+// ══════════════════════════════════════════════════════════════════════════════
+// Mapa Leaflet.js para Desktop Drone Control v2.0
+// ══════════════════════════════════════════════════════════════════════════════
+
+const map = L.map('map', {
+    center: [40.4168, -3.7038],
+    zoom: 6,
+    zoomControl: true,
+    attributionControl: false
+});
+
+// Tile layers
+const googleSatTiles = L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}', {
+    maxZoom: 20
+});
+
+const osmTiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19
+});
+
+// Default: Google Satellite
+googleSatTiles.addTo(map);
+
+// Layer control
+L.control.layers({
+    'Satélite (Google)': googleSatTiles,
+    'OpenStreetMap': osmTiles
+}, null, { position: 'topright' }).addTo(map);
+
+// ── Estado ──────────────────────────────────────────────────────────────────
+let droneMarker = null;
+let droneCircle = null;
+let trailPolyline = null;
+let trailPoints = [];
+const MAX_TRAIL = 20;
+let waypointMarkers = [];
+let routePolylines = [];
+let autoFollow = true;
+
+// ── Colores por velocidad ───────────────────────────────────────────────────
+function speedColor(speed) {
+    if (speed <= 1)  return '#4caf50';
+    if (speed <= 5)  return '#ffeb3b';
+    if (speed <= 10) return '#ff9800';
+    return '#f44336';
+}
+
+// ── Crear icono SVG del dron con heading ────────────────────────────────────
+function droneIcon(heading, color) {
+    const svg = `
+    <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+        <g transform="rotate(${heading}, 18, 18)">
+            <!-- Cuerpo -->
+            <circle cx="18" cy="18" r="10" fill="${color}" fill-opacity="0.85"
+                    stroke="white" stroke-width="2"/>
+            <!-- Flecha de heading -->
+            <polygon points="18,4 14,14 22,14" fill="white" fill-opacity="0.9"/>
+        </g>
+        <!-- Punto central -->
+        <circle cx="18" cy="18" r="3" fill="white"/>
+    </svg>`;
+
+    return L.divIcon({
+        html: svg,
+        iconSize: [36, 36],
+        iconAnchor: [18, 18],
+        className: ''
+    });
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// API pública (invocada desde Python via runJavaScript)
+// ══════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Actualiza posición del dron en el mapa.
+ * @param {number} lat
+ * @param {number} lon
+ * @param {number} heading - grados (0-360)
+ * @param {number} speed   - m/s
+ */
+function updateDronePosition(lat, lon, heading, speed) {
+    const latlng = [lat, lon];
+    const color = speedColor(speed);
+    const icon = droneIcon(heading, color);
+
+    if (!droneMarker) {
+        droneMarker = L.marker(latlng, { icon: icon, zIndexOffset: 1000 }).addTo(map);
+        droneCircle = L.circle(latlng, {
+            radius: 3,
+            color: color,
+            fillColor: color,
+            fillOpacity: 0.2,
+            weight: 1
+        }).addTo(map);
+        map.setView(latlng, 17);
+    } else {
+        droneMarker.setLatLng(latlng);
+        droneMarker.setIcon(icon);
+        droneCircle.setLatLng(latlng);
+        droneCircle.setStyle({ color: color, fillColor: color });
+    }
+
+    // Trail
+    trailPoints.push(latlng);
+    if (trailPoints.length > MAX_TRAIL) {
+        trailPoints.shift();
+    }
+    drawTrailInternal();
+
+    // Auto-follow
+    if (autoFollow) {
+        map.panTo(latlng);
+    }
+}
+
+function drawTrailInternal() {
+    if (trailPolyline) {
+        map.removeLayer(trailPolyline);
+    }
+    if (trailPoints.length < 2) return;
+
+    // Dibujar segmentos con opacidad decreciente
+    const segments = [];
+    for (let i = 1; i < trailPoints.length; i++) {
+        const opacity = 0.2 + 0.8 * (i / trailPoints.length);
+        const seg = L.polyline(
+            [trailPoints[i - 1], trailPoints[i]],
+            { color: '#64b5f6', weight: 3, opacity: opacity }
+        );
+        segments.push(seg);
+    }
+    trailPolyline = L.layerGroup(segments).addTo(map);
+}
+
+/**
+ * Añade un marcador de waypoint.
+ */
+function addWaypoint(lat, lon, label) {
+    const marker = L.marker([lat, lon], {
+        icon: L.divIcon({
+            html: `<div style="
+                background: #2196f3; color: white; border-radius: 50%;
+                width: 24px; height: 24px; display: flex; align-items: center;
+                justify-content: center; font-size: 10px; font-weight: bold;
+                border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            ">${label}</div>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12],
+            className: ''
+        })
+    }).addTo(map);
+    waypointMarkers.push(marker);
+}
+
+/**
+ * Limpia todos los waypoints del mapa.
+ */
+function clearWaypoints() {
+    waypointMarkers.forEach(m => map.removeLayer(m));
+    waypointMarkers = [];
+    routePolylines.forEach(p => map.removeLayer(p));
+    routePolylines = [];
+}
+
+/**
+ * Dibuja una ruta como polyline entre waypoints.
+ * @param {Array} points - [{lat, lon}, ...]
+ */
+function drawRoute(points) {
+    if (!points || points.length < 2) return;
+    const coords = points.map(p => [p.lat, p.lon]);
+    const poly = L.polyline(coords, {
+        color: '#ff9800',
+        weight: 3,
+        dashArray: '8, 6',
+        opacity: 0.8
+    }).addTo(map);
+    routePolylines.push(poly);
+}
+
+/**
+ * Centra la vista en una posición.
+ */
+function setView(lat, lon, zoom) {
+    map.setView([lat, lon], zoom || 17);
+}
+
+/**
+ * Activa/desactiva el auto-follow del dron.
+ */
+function setAutoFollow(enabled) {
+    autoFollow = enabled;
+}
+
+/**
+ * Limpia el trail.
+ */
+function clearTrail() {
+    trailPoints = [];
+    if (trailPolyline) {
+        map.removeLayer(trailPolyline);
+        trailPolyline = null;
+    }
+}
+
+/**
+ * Resetea todo (dron, trail, waypoints).
+ */
+function resetMap() {
+    if (droneMarker) { map.removeLayer(droneMarker); droneMarker = null; }
+    if (droneCircle) { map.removeLayer(droneCircle); droneCircle = null; }
+    clearTrail();
+    clearWaypoints();
+}
+</script>
+</body>
+</html>

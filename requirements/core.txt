@@ -1,0 +1,3 @@
+# Nucleo algoritmico: modelo de energia, costes y asignadores.
+numpy
+scipy

@@ -1,0 +1,268 @@
+[
+ {
+  "algoritmo": "greedy",
+  "enlace": "sitl",
+  "pedidos": 8,
+  "speedup": 5.0,
+  "segundos": 617.5,
+  "estados": {
+   "entregado": 8
+  },
+  "resumen": [
+   {
+    "algorithm": "greedy",
+    "delivered": 8,
+    "failed": 0,
+    "energy_wh_per_delivery": 26.98,
+    "duration_s_per_delivery": 134.0,
+    "wait_s_per_delivery": 3.2,
+    "energy_wh_per_km": 21.6
+   }
+  ],
+  "eventos": {
+   "nivel_retorno": 8,
+   "espera_pad": 4,
+   "escalonado": 3
+  },
+  "entregas": [
+   {
+    "drone_id": "Dron-1",
+    "order_id": 1,
+    "algorithm": "greedy",
+    "category": "ligero",
+    "weight_kg": 0.8,
+    "distance_km": 0.9889665793806446,
+    "energy_wh": 10.439091671240137,
+    "duration_s": 117.6804039478302,
+    "wait_s": 0.0,
+    "outcome": "entregado",
+    "finished_at": 1791720714.122017
+   },
+   {
+    "drone_id": "Dron-2",
+    "order_id": 2,
+    "algorithm": "greedy",
+    "category": "ligero",
+    "weight_kg": 1.0,
+    "distance_km": 0.9982482716522976,
+    "energy_wh": 10.745033479590703,
+    "duration_s": 128.98657631874084,
+    "wait_s": 11.0,
+    "outcome": "entregado",
+    "finished_at": 1791720725.4318774
+   },
+   {
+    "drone_id": "Dron-4",
+    "order_id": 4,
+    "algorithm": "greedy",
+    "category": "pesado",
+    "weight_kg": 1.5,
+    "distance_km": 1.0745047082772874,
+    "energy_wh": 29.20066035920221,
+    "duration_s": 152.7287952899933,
+    "wait_s": 7.0,
+    "outcome": "entregado",
+    "finished_at": 1791720749.180964
+   },
+   {
+    "drone_id": "Dron-3",
+    "order_id": 3,
+    "algorithm": "greedy",
+    "category": "medio",
+    "weight_kg": 1.2,
+    "distance_km": 2.3411240780576104,
+    "energy_wh": 35.89723586355002,
+    "duration_s": 217.95452117919922,
+    "wait_s": 8.0,
+    "outcome": "entregado",
+    "finished_at": 1791720814.403712
+   },
+   {
+    "drone_id": "Dron-4",
+    "order_id": 5,
+    "algorithm": "greedy",
+    "category": "pesado",
+    "weight_kg": 2.0,
+    "distance_km": 0.6571830185033378,
+    "energy_wh": 18.13338328833284,
+    "duration_s": 84.479318857193,
+    "wait_s": 0.0,
+    "outcome": "entregado",
+    "finished_at": 1791720836.4183624
+   },
+   {
+    "drone_id": "Dron-4",
+    "order_id": 6,
+    "algorithm": "greedy",
+    "category": "pesado",
+    "weight_kg": 2.5,
+    "distance_km": 1.849688612362229,
+    "energy_wh": 51.80840789255317,
+    "duration_s": 155.63441252708435,
+    "wait_s": 0.0,
+    "outcome": "entregado",
+    "finished_at": 1791720992.6041956
+   },
+   {
+    "drone_id": "Dron-4",
+    "order_id": 7,
+    "algorithm": "greedy",
+    "category": "pesado",
+    "weight_kg": 3.0,
+    "distance_km": 1.0320510513432484,
+    "energy_wh": 29.337006737257155,
+    "duration_s": 107.64259314537048,
+    "wait_s": 0.0,
+    "outcome": "entregado",
+    "finished_at": 1791721104.66731
+   },
+   {
+    "drone_id": "Dron-4",
+    "order_id": 8,
+    "algorithm": "greedy",
+    "category": "pesado",
+    "weight_kg": 3.5,
+    "distance_km": 1.04894546488718,
+    "energy_wh": 30.25430669558858,
+    "duration_s": 106.59875869750977,
+    "wait_s": 0.0,
+    "outcome": "entregado",
+    "finished_at": 1791721213.6710536
+   }
+  ]
+ },
+ {
+  "algoritmo": "cost_matrix",
+  "enlace": "sitl",
+  "pedidos": 8,
+  "speedup": 5.0,
+  "segundos": 528.8,
+  "estados": {
+   "entregado": 8
+  },
+  "resumen": [
+   {
+    "algorithm": "cost_matrix",
+    "delivered": 8,
+    "failed": 0,
+    "energy_wh_per_delivery": 25.42,
+    "duration_s_per_delivery": 140.7,
+    "wait_s_per_delivery": 8.8,
+    "energy_wh_per_km": 20.36
+   }
+  ],
+  "eventos": {
+   "nivel_retorno": 8,
+   "proximidad": 1,
+   "espera_pad": 8,
+   "espera": 1,
+   "escalonado": 3
+  },
+  "entregas": [
+   {
+    "drone_id": "Dron-1",
+    "order_id": 2,
+    "algorithm": "cost_matrix",
+    "category": "ligero",
+    "weight_kg": 1.0,
+    "distance_km": 0.9982482716522976,
+    "energy_wh": 10.745033479590703,
+    "duration_s": 117.29866123199463,
+    "wait_s": 0.0,
+    "outcome": "entregado",
+    "finished_at": 1791721333.9208393
+   },
+   {
+    "drone_id": "Dron-4",
+    "order_id": 5,
+    "algorithm": "cost_matrix",
+    "category": "pesado",
+    "weight_kg": 2.0,
+    "distance_km": 0.6571830185033378,
+    "energy_wh": 18.13338328833284,
+    "duration_s": 129.30307126045227,
+    "wait_s": 9.0,
+    "outcome": "entregado",
+    "finished_at": 1791721345.9587042
+   },
+   {
+    "drone_id": "Dron-2",
+    "order_id": 1,
+    "algorithm": "cost_matrix",
+    "category": "ligero",
+    "weight_kg": 0.8,
+    "distance_km": 0.9889665793806446,
+    "energy_wh": 10.439091671240137,
+    "duration_s": 140.79554200172424,
+    "wait_s": 17.0,
+    "outcome": "entregado",
+    "finished_at": 1791721357.4386127
+   },
+   {
+    "drone_id": "Dron-3",
+    "order_id": 4,
+    "algorithm": "cost_matrix",
+    "category": "medio",
+    "weight_kg": 1.5,
+    "distance_km": 1.0745047082772874,
+    "energy_wh": 16.757156760038647,
+    "duration_s": 151.86816596984863,
+    "wait_s": 17.0,
+    "outcome": "entregado",
+    "finished_at": 1791721368.5167835
+   },
+   {
+    "drone_id": "Dron-4",
+    "order_id": 7,
+    "algorithm": "cost_matrix",
+    "category": "pesado",
+    "weight_kg": 3.0,
+    "distance_km": 1.0320510513432484,
+    "energy_wh": 29.337006737257155,
+    "duration_s": 129.83950185775757,
+    "wait_s": 22.0,
+    "outcome": "entregado",
+    "finished_at": 1791721476.6572099
+   },
+   {
+    "drone_id": "Dron-3",
+    "order_id": 3,
+    "algorithm": "cost_matrix",
+    "category": "medio",
+    "weight_kg": 1.2,
+    "distance_km": 2.3411240780576104,
+    "energy_wh": 35.89723586355002,
+    "duration_s": 193.49439811706543,
+    "wait_s": 5.0,
+    "outcome": "entregado",
+    "finished_at": 1791721565.3542328
+   },
+   {
+    "drone_id": "Dron-4",
+    "order_id": 6,
+    "algorithm": "cost_matrix",
+    "category": "pesado",
+    "weight_kg": 2.5,
+    "distance_km": 1.849688612362229,
+    "energy_wh": 51.80840789255317,
+    "duration_s": 155.35287523269653,
+    "wait_s": 0.0,
+    "outcome": "entregado",
+    "finished_at": 1791721632.338207
+   },
+   {
+    "drone_id": "Dron-4",
+    "order_id": 8,
+    "algorithm": "cost_matrix",
+    "category": "pesado",
+    "weight_kg": 3.5,
+    "distance_km": 1.04894546488718,
+    "energy_wh": 30.25430669558858,
+    "duration_s": 107.81013751029968,
+    "wait_s": 0.0,
+    "outcome": "entregado",
+    "finished_at": 1791721745.0508475
+   }
+  ]
+ }
+]

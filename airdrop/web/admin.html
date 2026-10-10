@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirDrop · Administración</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- Login admin -->
+    <div id="admin-login-view">
+        <h1>AirDrop · Admin</h1>
+        <p class="subtitle" id="login-subtitle">Accede al panel de administración.</p>
+
+        <form id="admin-login-form" onsubmit="admin.submitAuth(event)">
+            <div class="form-group">
+                <label>Usuario</label>
+                <input type="text" id="admin-user" required placeholder="admin">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" id="admin-pass" required placeholder="••••••••">
+            </div>
+            <button type="submit" id="btn-admin-login">Entrar</button>
+        </form>
+        <p style="margin-top:16px;font-size:13px;"><a href="/">← Volver al portal de cliente</a></p>
+    </div>
+
+    <!-- Panel admin -->
+    <div id="admin-panel-view">
+        <div class="sidebar admin-sidebar">
+            <div class="sidebar-header">
+                <div class="logo">AirDrop · Admin</div>
+                <button class="logout-btn" onclick="admin.logout()">SALIR</button>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="routes" onclick="admin.showTab('routes')">Rutas</button>
+                <button class="tab-btn" data-tab="orders" onclick="admin.showTab('orders')">Pedidos / Flota</button>
+                <button class="tab-btn" data-tab="accounts" onclick="admin.showTab('accounts')">Cuentas</button>
+                <button class="tab-btn" data-tab="swarm" onclick="admin.showTab('swarm')">Enjambre</button>
+            </div>
+
+            <div class="sidebar-content">
+                <!-- TAB RUTAS -->
+                <div id="tab-routes" class="tab-content active">
+                    <label>Escenario</label>
+                    <select id="profile-select" onchange="admin.selectProfile(this.value)"></select>
+                    <div class="swarm-actions">
+                        <button class="secondary small" onclick="admin.createProfile()">Nuevo escenario</button>
+                        <button class="secondary small" onclick="admin.deleteProfile()">Eliminar escenario</button>
+                        <button class="secondary small" onclick="admin.resetProfiles()">Restaurar de f&aacute;brica</button>
+                    </div>
+
+                    <div class="profile-fields">
+                        <div>
+                            <label>Velocidad (m/s)</label>
+                            <input type="number" id="profile-speed" step="0.5" min="0.2" max="20">
+                            <p class="scenario-help">M&aacute;ximo 20 m/s: por encima, el
+                            autopiloto descarta el par&aacute;metro y vuelve a sus 10 m/s
+                            por defecto.</p>
+                        </div>
+                    </div>
+
+                    <h3>Niveles de vuelo</h3>
+                    <div id="fl-panel"></div>
+
+                    <p class="hub-line" id="hub-line">HUB: no definido</p>
+                    <button class="secondary small" onclick="admin.startPick('hub')">Fijar HUB en el mapa</button>
+
+                    <h3>Parkings</h3>
+                    <ul class="edit-list" id="parkings-list"></ul>
+                    <button class="secondary small" onclick="admin.addPointPrompt('parking')">+ Añadir parking</button>
+
+                    <h3>Destinos</h3>
+                    <ul class="edit-list" id="dests-list"></ul>
+                    <button class="secondary small" onclick="admin.addPointPrompt('destination')">+ Añadir destino</button>
+
+                    <h3>Rutas</h3>
+                    <ul class="edit-list" id="routes-list"></ul>
+                    <button class="secondary small" onclick="admin.startRouteCreation()">+ Crear ruta</button>
+
+                    <!-- Editor de waypoints intermedios de una ruta -->
+                    <div id="route-editor" class="route-editor hidden"></div>
+
+                    <div class="save-bar">
+                        <button onclick="admin.saveProfiles()">Guardar cambios</button>
+                    </div>
+                    <p class="status-line" id="routes-status"></p>
+                </div>
+
+                <!-- TAB PEDIDOS -->
+                <div id="tab-orders" class="tab-content">
+                    <div id="drone-ops-section" class="hidden">
+                        <h3>Operaciones del dron</h3>
+                        <div class="ops-grid">
+                            <button class="secondary small" onclick="admin.droneControl('cancel')">⏹ Cancelar</button>
+                            <button class="secondary small" onclick="admin.droneControl('hold')">⏸ Hold</button>
+                            <button class="secondary small" onclick="admin.droneControl('rtl')">⮌ RTL</button>
+                            <button class="secondary small" onclick="admin.droneControl('land')">⤓ Land</button>
+                        </div>
+                    </div>
+
+                    <h3>Flota de referencia</h3>
+                    <div id="fleet-box" class="fleet-box"></div>
+
+                    <h3>Pedidos</h3>
+                    <button class="secondary small" onclick="admin.loadOrders()">Actualizar</button>
+                    <div class="orders-list" id="admin-orders-list"></div>
+                </div>
+
+                <!-- TAB CUENTAS -->
+                <div id="tab-accounts" class="tab-content">
+                    <h3>Cuentas de cliente</h3>
+                    <button class="secondary small" onclick="admin.loadAccounts()">Actualizar</button>
+                    <ul class="edit-list" id="accounts-list"></ul>
+                </div>
+
+                <!-- TAB ENJAMBRE -->
+                <div id="tab-swarm" class="tab-content">
+                    <h3>Escenario operacional</h3>
+                    <p class="scenario-help">
+                        Los l&iacute;mites de vuelo de cada escenario de <b>Rutas</b>:
+                        geovalla, capas de altitud, separaci&oacute;n, aforo del HUB y
+                        reserva de bater&iacute;a. La lista es la misma que la de Rutas;
+                        aqu&iacute; se le a&ntilde;aden sus par&aacute;metros operacionales.
+                        Seleccionar solo lo muestra en el mapa &mdash; hasta pulsar
+                        <b>Activar</b> sigue mandando el que est&eacute; marcado como activo.
+                    </p>
+                    <select id="scenario-select" onchange="admin.selectScenario(this.value)"></select>
+                    <p class="scenario-warn hidden" id="scenario-warn">
+                        Coordenadas aproximadas: aj&uacute;stalas en el mapa.
+                    </p>
+
+                    <div id="scenario-parking"></div>
+                    <div class="scenario-grid" id="scenario-form"></div>
+                    <div class="scenario-actions">
+                        <button class="secondary small" onclick="admin.saveScenario()">Guardar par&aacute;metros</button>
+                        <button class="secondary small" onclick="admin.activateScenario()">Activar escenario</button>
+                    </div>
+                    <p class="status-line" id="scenario-status"></p>
+
+                    <h3>Flota</h3>
+                    <p class="swarm-backend" id="swarm-backend">—</p>
+                    <div class="swarm-actions algo-row hidden" id="swarm-source-row">
+                        <label for="swarm-source">Drones</label>
+                        <select id="swarm-source" onchange="admin.setSource(this.value)">
+                            <option value="nube">SITL en la nube</option>
+                            <option value="puente">SITL de mi PC (puente)</option>
+                        </select>
+                    </div>
+                    <p class="swarm-backend" id="swarm-pasarela"></p>
+
+                    <div class="swarm-actions">
+                        <button onclick="admin.swarmStart()">Iniciar repartos</button>
+                        <button class="secondary" onclick="admin.swarmStop()">Parar todo</button>
+                    </div>
+                    <div class="swarm-actions">
+                        <button class="secondary small" onclick="admin.demoSeed()">Sembrar oleada de demostraci&oacute;n</button>
+                        <button class="secondary small" onclick="admin.demoClear()">Borrar lo sembrado</button>
+                    </div>
+                    <div class="swarm-actions">
+                        <a class="secondary small boton-enlace" href="/simulacion/" target="_blank" rel="noopener">Consola de simulaci&oacute;n: flota, parking y SITL &#8599;</a>
+                    </div>
+                    <div class="swarm-actions algo-row">
+                        <label for="swarm-algorithm">Asignaci&oacute;n</label>
+                        <select id="swarm-algorithm" onchange="admin.setAlgorithm(this.value)">
+                            <option value="greedy">Voraz (greedy)</option>
+                            <option value="cost_matrix">&Oacute;ptima global (matriz de costes)</option>
+                        </select>
+                    </div>
+                    <div class="swarm-actions">
+                        <button class="secondary small" onclick="admin.probeFleet()">Probar conexi&oacute;n</button>
+                        <button class="secondary small" onclick="admin.scanPorts()">Buscar autopilotos</button>
+                        <button class="secondary small" onclick="admin.reseatFleet()">Restablecer puertos</button>
+                    </div>
+                    <div id="swarm-blocked" class="swarm-blocked hidden"></div>
+                    <div id="swarm-probe" class="swarm-probe"></div>
+
+                    <div id="swarm-list" class="swarm-list"></div>
+                    <p class="status-line" id="swarm-status"></p>
+
+                    <h3>M&eacute;tricas por algoritmo</h3>
+                    <div class="swarm-actions">
+                        <button class="secondary small" onclick="admin.loadMetrics()">Actualizar</button>
+                        <button class="secondary small" onclick="admin.downloadMetrics()">Descargar CSV</button>
+                        <button class="secondary small" onclick="admin.clearMetrics()">Vaciar</button>
+                    </div>
+                    <div id="swarm-metrics" class="swarm-probe"></div>
+
+                    <h3>Eventos de seguridad</h3>
+                    <div id="swarm-events" class="swarm-events"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div id="admin-map"></div>
+            <div id="geofence-badge" class="geofence-badge hidden"></div>
+            <div id="tracked-drone" class="tracked-drone hidden"></div>
+            <div class="pick-banner hidden" id="pick-banner"></div>
+
+            <!-- Monitor de dron: panel desplegable a la derecha (solo en local) -->
+            <div class="drone-monitor hidden" id="drone-monitor">
+                <div class="dm-header" onclick="admin.toggleMonitor()">
+                    <span>Monitor de dron</span>
+                    <span id="dm-toggle">▸</span>
+                </div>
+                <div class="dm-body hidden" id="dm-body">
+                    <div class="dm-drone">
+                        <div class="dm-drone-head">
+                            <b>Dron SITL</b>
+                            <span class="badge" id="dm-state">—</span>
+                        </div>
+                        <div class="dm-rows" id="dm-rows"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="ui.js"></script>
+    <script src="app.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

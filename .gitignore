@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Base de datos local (efímera)
+operations.db
+operations_*.db
+*.db-journal
+
+# Documentos generados
+*.docx
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Secretos / entorno
+.env
+.env.*
+
+# SITL: cada instancia escribe logs y su eeprom en su directorio de trabajo
+sitl_run/
+*.BIN
+eeprom.bin
+
+# Entorno temporal de comprobación de instalación
+.venv-check/
+sitl_escenario.bat
+
+# SITL de Linux que descarga el portal en la nube (sitl_linux.py)
+/sitl/

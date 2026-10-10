@@ -1,0 +1,5 @@
+# Experimentos del capítulo 10 y sus gráficas.
+-r core.txt
+matplotlib
+# Planes MILP y óptimo exacto. La 4.0 cambió la interfaz.
+pulp==2.9.0

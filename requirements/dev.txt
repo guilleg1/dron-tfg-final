@@ -1,0 +1,5 @@
+# Entorno completo de desarrollo.
+-r api.txt
+-r research.txt
+pytest
+httpx

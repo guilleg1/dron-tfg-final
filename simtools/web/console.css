@@ -1,0 +1,360 @@
+/* Consola de simulación. Sigue la identidad del portal AirDrop: fondo claro,
+   paneles blancos, bordes rectos, negro como color primario y las etiquetas en
+   mayúsculas. Se repiten aquí las variables en vez de importar style.css
+   porque la consola no se sirve desde el portal. */
+
+:root {
+  --bg-color: #f4f4f4;
+  --panel-bg: #ffffff;
+  --panel-border: #e0e0e0;
+  --primary: #000000;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --text-main: #333333;
+  --text-muted: #777777;
+
+  /* Turnos de despegue. Tonos apagados: el dibujo tiene que leerse, no
+     llamar la atención. */
+  --tanda-1: #2b6cb0;
+  --tanda-2: #b7791f;
+  --tanda-3: #2f855a;
+  --tanda-4: #6b46c1;
+  --tanda-5: #b83280;
+  --tanda-6: #4a5568;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important;
+}
+
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.5;
+  padding: 24px;
+}
+
+/* ── Cabecera ───────────────────────────────────────────────────────── */
+.cabecera {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.logo { font-size: 24px; font-weight: bold; }
+
+/* ── Rejilla de paneles ─────────────────────────────────────────────── */
+.tablero {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.fila-inferior {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .tablero { grid-template-columns: 1fr; }
+}
+
+.panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  padding: 20px 24px 24px;
+}
+
+.panel h2 {
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid var(--primary);
+  display: inline-block;
+  padding-bottom: 4px;
+  margin-bottom: 16px;
+}
+
+.panel h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 20px 0 8px;
+}
+
+/* ── Formularios ────────────────────────────────────────────────────── */
+.campo { margin-bottom: 14px; }
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+label .pista {
+  display: block;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: normal;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+input[type="number"], select {
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--panel-border);
+  color: var(--text-main);
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+input:focus, select:focus { outline: none; border-color: var(--primary); }
+input:disabled { background: #f7f7f7; color: var(--text-muted); }
+
+.casilla {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 14px;
+  font-weight: normal;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.casilla input { width: auto; }
+
+button {
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  border: 1px solid var(--primary);
+  padding: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover:not(:disabled) { background: #333; border-color: #333; }
+
+button.secundario { background: #fff; color: var(--primary); }
+button.secundario:hover:not(:disabled) { background: #f4f4f4; }
+
+button.peligro { background: var(--danger); border-color: var(--danger); }
+button.peligro:hover:not(:disabled) { background: #b32a38; border-color: #b32a38; }
+
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.botonera { display: flex; gap: 8px; margin-top: 4px; }
+
+/* ── Flota ──────────────────────────────────────────────────────────── */
+.dron-fila {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.dron-nombre {
+  flex: 0 0 78px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+/* El mismo color que su plaza en el plano: sin esto hay que contar cuadros
+   para saber qué dron es cuál. */
+.dron-punto { width: 12px; height: 12px; flex: 0 0 12px; }
+
+.dron-fila select { flex: 1 1 auto; min-width: 0; padding: 6px 10px; font-size: 13px; }
+/* El botón global ocupa el 100 % del ancho; aquí es un cuadrado al final. */
+.dron-fila button.quitar {
+  flex: 0 0 32px; width: 32px; height: 32px; padding: 0; margin: 0;
+  font-size: 14px; line-height: 1; text-transform: none;
+}
+.dron-nombre .nuevo { font-size: 11px; opacity: 0.6; }
+.dron-nombre { flex-basis: auto; min-width: 78px; }
+
+code {
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 12px;
+  background: #f0f0f0;
+  padding: 1px 4px;
+}
+
+.nota { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+
+/* ── Plano del parking ──────────────────────────────────────────────── */
+.plano-marco {
+  border: 1px solid var(--panel-border);
+  background:
+    linear-gradient(#fafafa 0 0) padding-box;
+  padding: 8px;
+}
+
+#plano { width: 100%; height: min(52vh, 460px); display: block; cursor: pointer; }
+
+.rejilla-fondo { stroke: #ececec; stroke-width: 0.15; }
+.eje { stroke: #d8d8d8; stroke-width: 0.25; }
+
+.burbuja { fill-opacity: 0.10; stroke-width: 0.35; stroke-opacity: 0.8; }
+.burbuja.apagada { fill-opacity: 0.03; stroke-opacity: 0.18; }
+
+.conflicto { stroke: var(--danger); stroke-width: 0.45; }
+.conflicto.apagada { stroke-opacity: 0.12; }
+
+/* Halo en las plazas, para que las líneas que pasan por debajo no parezcan
+   atravesarlas. */
+.pad { stroke: #fff; stroke-width: 0.5; }
+.pad.apagada { opacity: 0.3; }
+.pad-texto {
+  fill: #fff;
+  text-anchor: middle;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: bold;
+  pointer-events: none;
+}
+.pad-texto.apagada { opacity: 0.35; }
+
+.centro { fill: none; stroke: var(--text-muted); stroke-width: 0.25; }
+.centro-texto {
+  fill: var(--text-muted);
+  text-anchor: middle;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.escala { stroke: var(--text-main); stroke-width: 0.3; }
+.escala-texto {
+  fill: var(--text-main);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  text-anchor: middle;
+}
+
+/* ── Leyenda y lectura ──────────────────────────────────────────────── */
+.leyenda {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 10px 20px;
+  margin: 16px 0;
+  padding: 14px 16px;
+  background: #fafafa;
+  border: 1px solid var(--panel-border);
+}
+
+.leyenda-item { display: flex; gap: 10px; font-size: 13px; line-height: 1.35; }
+.leyenda-item b { display: block; font-size: 12px; }
+.leyenda-item span { color: var(--text-muted); }
+
+.muestra { flex: 0 0 26px; height: 26px; margin-top: 2px; }
+
+.muestra-burbuja {
+  border: 1px solid var(--tanda-1);
+  background: rgba(43, 108, 176, 0.12);
+  border-radius: 50% !important;
+}
+
+.muestra-pad { background: var(--tanda-1); }
+
+.muestra-linea {
+  height: 26px;
+  background: linear-gradient(to bottom, transparent 45%, var(--danger) 45%,
+                              var(--danger) 55%, transparent 55%);
+}
+
+.veredicto[hidden] { display: none; }
+
+.veredicto {
+  border-left: 4px solid var(--primary);
+  padding: 12px 16px;
+  background: #fafafa;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.veredicto strong { font-size: 15px; }
+.veredicto .detalle { color: var(--text-muted); font-size: 13px; display: block; margin-top: 4px; }
+
+.tandas-tira { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+.tanda-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  border: 1px solid var(--panel-border);
+  background: #fff;
+  padding: 4px 8px;
+}
+
+.tanda-punto { width: 10px; height: 10px; }
+
+/* ── Tabla de instancias ────────────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--panel-border); }
+th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  font-weight: bold;
+}
+
+.pastilla {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid;
+}
+
+.pastilla.ok { color: var(--success); border-color: var(--success); background: #f1f9f3; }
+.pastilla.mal { color: var(--danger); border-color: var(--danger); background: #fdf2f3; }
+.pastilla.parada { color: var(--text-muted); border-color: var(--panel-border); background: #fafafa; }
+
+.entorno { font-size: 13px; padding: 10px 12px; border: 1px solid var(--panel-border); background: #fafafa; }
+.entorno.mal { color: var(--danger); border-color: var(--danger); background: #fdf2f3; }
+
+/* ── Mensajes ───────────────────────────────────────────────────────── */
+#mensaje {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  padding: 12px 18px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+  max-width: 60ch;
+}
+
+#mensaje.visible { opacity: 1; transform: translateY(0); }
+#mensaje.error { background: var(--danger); }
+
+/* Enlace de vuelta al panel cuando la consola se abre desde el portal. */
+.volver { margin-left: auto; font-size: 13px; color: inherit; }

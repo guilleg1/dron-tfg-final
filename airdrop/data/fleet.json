@@ -1,0 +1,8 @@
+{
+  "drones": [
+    {"drone_id": "Dron-1", "sysid": 1, "instance": 0, "category": "ligero"},
+    {"drone_id": "Dron-2", "sysid": 2, "instance": 1, "category": "ligero"},
+    {"drone_id": "Dron-3", "sysid": 3, "instance": 2, "category": "medio"},
+    {"drone_id": "Dron-4", "sysid": 4, "instance": 3, "category": "pesado"}
+  ]
+}

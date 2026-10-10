@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AirDrop · ParkingTool</title>
+  <link rel="stylesheet" href="static/console.css">
+</head>
+<body>
+
+  <div class="cabecera">
+    <span class="logo">AirDrop · ParkingTool</span>
+    <a class="volver" id="volver-panel" href="/admin.html" hidden>← Volver al panel</a>
+  </div>
+
+  <div class="tablero">
+
+    <!-- ── Controles de la formación ────────────────────────────────── -->
+    <section class="panel">
+      <h2>Formación</h2>
+
+      <div class="campo">
+        <label for="n_drones">Drones</label>
+        <input type="number" id="n_drones" min="1" max="100" value="4">
+      </div>
+
+      <div class="campo">
+        <label for="pad_layout">Disposición</label>
+        <select id="pad_layout">
+          <option value="fila">Fila</option>
+          <option value="rejilla">Rejilla</option>
+          <option value="circulo">Círculo</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="pad_cols">
+          Columnas
+          <span class="pista">Solo en rejilla.</span>
+        </label>
+        <input type="number" id="pad_cols" min="0" max="100" value="2">
+      </div>
+
+      <div class="campo">
+        <label for="pad_spacing_m">
+          Espaciado entre plazas (m)
+          <span class="pista">Distancia física entre pads contiguos.</span>
+        </label>
+        <input type="number" id="pad_spacing_m" min="1" step="0.5" value="8">
+      </div>
+
+      <div class="campo">
+        <label for="pad_heading_deg">
+          Rumbo de la formación (°)
+          <span class="pista">0 = norte, 90 = este.</span>
+        </label>
+        <input type="number" id="pad_heading_deg" min="0" max="359" step="5" value="90">
+      </div>
+
+      <h3>Vertipuerto</h3>
+
+      <div class="campo">
+        <label for="pad_separation_m">
+          Separación para operar a la vez (m)
+          <span class="pista">Dos drones más cerca que esto no maniobran
+            simultáneamente. 0 = uno cada vez.</span>
+        </label>
+        <input type="number" id="pad_separation_m" min="0" step="1" value="25">
+      </div>
+
+      <div class="campo">
+        <label for="vertiport_capacity">
+          Tope de maniobras simultáneas
+          <span class="pista">0 = solo lo limita la geometría.</span>
+        </label>
+        <input type="number" id="vertiport_capacity" min="0" max="100" value="0">
+      </div>
+
+      <div class="campo">
+        <label for="takeoff_gap_s">
+          Escalonado de despegue (s)
+          <span class="pista">Espera entre despegues de plazas que se estorban.</span>
+        </label>
+        <input type="number" id="takeoff_gap_s" min="0" step="1" value="10">
+      </div>
+
+      <h3>Flota</h3>
+      <p class="nota" style="margin-top:0">
+        La categoría fija carga máxima, batería y velocidad. El asignador
+        reparte los pedidos según ella.
+      </p>
+      <div id="flota"></div>
+
+      <button id="aplicar">Aplicar al escenario</button>
+      <p class="nota">
+        Guarda la formación y recoloca la flota. No lo hagas con drones volando.
+        El ✕ de cada dron lo quita al momento y para solo su instancia.
+      </p>
+    </section>
+
+    <!-- ── Plano ────────────────────────────────────────────────────── -->
+    <section class="panel">
+      <h2>Plano del parking</h2>
+
+      <!-- Nace oculto: solo aparece cuando hay algo que decir. Visible y
+           vacío dejaba una barra gris bajo el título. -->
+      <div id="veredicto" class="veredicto" hidden></div>
+
+      <div class="plano-marco">
+        <svg id="plano" viewBox="-60 -60 120 120" role="img"
+             aria-label="Plano del parking con las plazas y sus distancias"></svg>
+      </div>
+
+      <div class="leyenda">
+        <div class="leyenda-item">
+          <span class="muestra muestra-pad"></span>
+          <span>
+            <b>Plaza</b>
+            <span>Dónde nace el dron. El número es el suyo. El color es su
+              turno de despegue.</span>
+          </span>
+        </div>
+        <div class="leyenda-item">
+          <span class="muestra muestra-burbuja"></span>
+          <span>
+            <b>Burbuja de maniobra</b>
+            <span>Radio = la mitad de la separación exigida. Si dos burbujas
+              se tocan, esos dos drones no pueden subir ni bajar a la vez.</span>
+          </span>
+        </div>
+        <div class="leyenda-item">
+          <span class="muestra muestra-linea"></span>
+          <span>
+            <b>Línea roja</b>
+            <span>Une cada par que se estorba. Si no hay líneas, todos pueden
+              operar a la vez.</span>
+          </span>
+        </div>
+      </div>
+
+      <p class="nota">
+        Pulsa una plaza para ver solo sus conflictos. Pulsa fuera para volver.
+      </p>
+    </section>
+
+    <div class="fila-inferior">
+
+      <!-- ── SITL ───────────────────────────────────────────────────── -->
+      <section class="panel">
+        <h2>Instancias SITL</h2>
+
+        <div class="campo">
+          <label for="speedup">Aceleración de la simulación</label>
+          <select id="speedup">
+            <option value="1">×1 · tiempo real</option>
+            <option value="2">×2</option>
+            <option value="5">×5</option>
+            <option value="10">×10</option>
+          </select>
+        </div>
+
+        <div class="botonera">
+          <button id="lanzar">Lanzar</button>
+          <button id="parar" class="secundario">Parar</button>
+          <button id="refrescar" class="secundario">Refrescar</button>
+        </div>
+
+        <table id="instancias">
+          <thead>
+            <tr>
+              <th>Dron</th><th>SYSID</th><th>Conexión</th><th>PID</th><th>Estado</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <p class="entorno" id="entorno"></p>
+      </section>
+
+      <!-- ── Base de datos ──────────────────────────────────────────── -->
+      <section class="panel">
+        <h2>Base de datos</h2>
+
+        <h3>Sembrar pedidos de prueba</h3>
+
+        <div class="campo">
+          <label for="preset">Escenario de pedidos</label>
+          <select id="preset"></select>
+          <p class="nota" id="preset-descripcion"></p>
+        </div>
+
+        <div class="campo">
+          <label for="semilla">
+            Semilla
+            <span class="pista">La misma semilla repite exactamente los mismos
+              clientes. Vacío = al azar.</span>
+          </label>
+          <input type="number" id="semilla" value="42">
+        </div>
+
+        <div class="campo">
+          <label for="n_pedidos">
+            Pedidos
+            <span class="pista">Vacío = los del escenario. Si pones más, los
+              pesos se repiten en ciclo. Dos por dron reproduce la escasez de la
+              oleada.</span>
+          </label>
+          <input type="number" id="n_pedidos" min="1" max="500" placeholder="los del escenario">
+        </div>
+
+        <button id="sembrar">Sembrar</button>
+        <p class="nota">
+          Equivale a <code>python -m airdrop.demo seed &lt;escenario&gt;
+          --seed &lt;semilla&gt;</code>. Los clientes se colocan dentro de la
+          geovalla y junto a un destino con ruta.
+        </p>
+
+        <h3>Vaciar</h3>
+
+        <label class="casilla">
+          <input type="checkbox" id="borrar_pedidos" checked> Pedidos
+        </label>
+        <label class="casilla">
+          <input type="checkbox" id="borrar_clientes"> Clientes
+        </label>
+
+        <button id="limpiar" class="peligro">Vaciar</button>
+        <p class="nota">
+          Escenarios y flota no se tocan. Los eventos y las métricas viven en
+          memoria del portal: para vaciarlos, reinícialo.
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+  <p id="mensaje" role="status"></p>
+  <script src="static/console.js"></script>
+</body>
+</html>

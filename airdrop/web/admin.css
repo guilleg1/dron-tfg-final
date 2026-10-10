@@ -1,0 +1,577 @@
+/* Estilos del panel de administración (complementan style.css) */
+
+#admin-login-view {
+  max-width: 400px;
+  margin: 15vh auto;
+  background: var(--panel-bg);
+  padding: 32px;
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+#admin-panel-view {
+  display: none;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+#admin-panel-view.active { display: flex; }
+
+.admin-sidebar { width: 380px; }
+
+/* Pestañas */
+.admin-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--panel-border);
+}
+.tab-btn {
+  flex: 1;
+  width: auto;
+  background: #fafafa;
+  color: var(--text-muted);
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 12px;
+}
+.tab-btn:hover { background: #f0f0f0; color: var(--text-main); }
+.tab-btn.active {
+  background: #fff;
+  color: var(--primary);
+  border-bottom: 2px solid var(--primary);
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.tab-content h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 20px 0 8px;
+  color: var(--text-main);
+}
+
+/* Campos de perfil */
+#profile-select { width: 100%; padding: 10px; border: 1px solid var(--panel-border); font-size: 14px; margin-bottom: 12px; }
+.profile-fields { display: flex; gap: 12px; margin-bottom: 12px; }
+.profile-fields > div { flex: 1; }
+
+.hub-line {
+  font-size: 13px;
+  color: var(--warning);
+  background: #fff8e1;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+}
+
+button.small { width: auto; padding: 6px 12px; font-size: 11px; margin-top: 6px; }
+
+.li-btns { display: flex; gap: 4px; }
+
+/* Editor de waypoints de una ruta */
+.route-editor {
+  border: 1px solid var(--primary);
+  background: #fff8e1;
+  padding: 12px;
+  margin-top: 12px;
+}
+.route-editor .re-title { font-size: 13px; margin-bottom: 4px; }
+.route-editor .re-hint { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+.route-editor .re-actions { display: flex; gap: 8px; margin-top: 8px; }
+.route-editor .re-actions button { margin-top: 0; }
+
+/* Listas editables */
+.edit-list { list-style: none; }
+.edit-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 10px;
+  border: 1px solid var(--panel-border);
+  margin-bottom: 4px;
+  font-size: 13px;
+  background: #fafafa;
+}
+.edit-list li.muted { color: var(--text-muted); justify-content: flex-start; background: transparent; border: none; }
+.edit-list small { color: var(--text-muted); }
+.edit-list button.x {
+  width: auto; padding: 2px 7px; font-size: 12px;
+  background: transparent; color: var(--danger); border: 1px solid var(--panel-border);
+}
+.edit-list button.x:hover { background: var(--danger); color: #fff; }
+
+.save-bar { margin-top: 20px; }
+.status-line { font-size: 12px; color: var(--success); margin-top: 8px; min-height: 16px; }
+
+/* Operaciones del dron */
+.ops-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ops-grid button { margin-top: 0; }
+
+/* Flota */
+.fleet-box { display: flex; flex-direction: column; gap: 6px; }
+.fleet-item { font-size: 13px; padding: 8px 10px; border: 1px solid var(--panel-border); background: #fafafa; }
+.muted { color: var(--text-muted); }
+
+/* Pedidos admin */
+.admin-order { cursor: pointer; }
+.admin-order:hover { background: #f0f0f0; }
+.order-actions { display: flex; gap: 6px; margin-top: 8px; }
+button.mini {
+  width: auto; flex: 1; padding: 6px; font-size: 13px;
+  background: #fff; color: var(--text-main); border: 1px solid var(--panel-border);
+}
+button.mini:hover { background: var(--primary); color: #fff; }
+button.mini.danger { color: var(--danger); }
+button.mini.danger:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+
+/* Mapa admin */
+#admin-map { width: 100%; height: 100%; background: #e0e0e0; }
+
+/* Monitor de dron (panel desplegable a la derecha) */
+.drone-monitor {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 240px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1000;
+}
+.dm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: var(--primary);
+  color: #fff;
+}
+.dm-body { padding: 12px 14px; max-height: 60vh; overflow-y: auto; }
+.dm-drone-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.dm-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.dm-row span { color: var(--text-muted); }
+.dm-row b { font-family: 'Courier New', monospace; }
+
+.pick-banner {
+  position: absolute;
+  top: 16px; left: 50%; transform: translateX(-50%);
+  background: rgba(20,20,20,0.9); color: #fff;
+  padding: 10px 16px; font-size: 13px; z-index: 1000;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.pick-banner button { width: auto; padding: 4px 10px; font-size: 11px; background: #fff; color: #000; border: none; }
+
+/* ── Pestaña Enjambre ─────────────────────────────────────────────────── */
+.swarm-backend {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.swarm-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.swarm-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.swarm-card {
+  border: 1px solid var(--panel-border);
+  padding: 12px;
+  background: #fafafa;
+}
+
+/* Selector de algoritmo de asignacion. */
+.algo-row {
+  align-items: center;
+  gap: 8px;
+}
+
+.algo-row label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.algo-row select {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 13px;
+}
+
+/* Dron que el mapa esta siguiendo. */
+.swarm-card.tracking {
+  border-color: #00bcd4;
+  background: #e6f7fa;
+  box-shadow: inset 3px 0 0 #00bcd4;
+}
+
+/* Ficha del dron seguido: flota sobre el mapa, arriba a la derecha, en vez
+   de dentro de la barra lateral. Estando en la lista quedaba lejos del dron
+   que se esta mirando y obligaba a bajar por la barra mientras vuela. */
+.tracked-drone {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 270px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  z-index: 1000;
+  border: 1px solid #00bcd4;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  padding: 12px;
+}
+
+.tracked-drone .swarm-meta { grid-template-columns: 1fr; }
+
+.tracked-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tracked-head b { margin-right: auto; }
+
+.swarm-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.swarm-card-head b { font-size: 14px; }
+
+.swarm-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 12px;
+}
+
+.swarm-battery {
+  height: 6px;
+  background: #e0e0e0;
+  margin: 8px 0;
+}
+
+.swarm-battery > span {
+  display: block;
+  height: 100%;
+  background: var(--success);
+}
+
+.swarm-battery.low > span { background: var(--danger); }
+
+.swarm-card-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.swarm-card-actions button {
+  flex: 1;
+  padding: 4px 6px;
+  font-size: 10px;
+}
+
+.badge.offline  { background: var(--text-muted); }
+.badge.idle     { background: var(--success); }
+.badge.error    { background: var(--danger); }
+
+/* ── Escenario operacional ────────────────────────────────────────────── */
+.scenario-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 10px;
+  margin: 12px 0;
+}
+
+.scenario-grid label {
+  font-size: 10px;
+  margin-bottom: 2px;
+}
+
+.scenario-grid input {
+  padding: 5px 8px;
+  font-size: 12px;
+}
+
+.scenario-grid .group-title {
+  grid-column: 1 / -1;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.scenario-actions { display: flex; gap: 8px; }
+
+.scenario-warn {
+  font-size: 11px;
+  color: var(--danger);
+  margin-bottom: 8px;
+}
+
+.swarm-events {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid var(--panel-border);
+  background: #fafafa;
+  font-size: 11px;
+}
+
+.swarm-event {
+  display: grid;
+  grid-template-columns: 62px 112px 1fr;
+  gap: 6px;
+  padding: 4px 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.swarm-event .kind { font-weight: bold; text-transform: uppercase; font-size: 10px; }
+.swarm-event.rtl .kind, .swarm-event.error .kind,
+.swarm-event.enlace_perdido .kind { color: var(--danger); }
+.swarm-event.espera .kind, .swarm-event.cesion .kind { color: var(--warning); }
+
+/* ── Diagnostico de enlace ────────────────────────────────────────────── */
+.swarm-probe { margin: 10px 0; font-size: 11px; }
+
+.probe-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr auto;
+  gap: 6px;
+  align-items: center;
+  padding: 5px 8px;
+  border: 1px solid var(--panel-border);
+  border-left-width: 3px;
+  background: #fafafa;
+  margin-bottom: 4px;
+}
+
+.probe-row.ok { border-left-color: var(--success); }
+.probe-row.ko { border-left-color: var(--danger); }
+.probe-row input { padding: 3px 6px; font-size: 11px; }
+.probe-row button { padding: 3px 8px; font-size: 10px; width: auto; }
+
+/* Tabla comparativa de metricas por algoritmo. */
+.metrics-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.metrics-table th,
+.metrics-table td {
+  border: 1px solid var(--panel-border);
+  padding: 5px 7px;
+  text-align: right;
+}
+
+.metrics-table th:first-child,
+.metrics-table td:first-child {
+  text-align: left;
+}
+
+.metrics-table th {
+  background: #f2f2f2;
+  font-weight: 600;
+}
+
+/* Aviso de pedidos que ningun dron puede llevar. */
+.swarm-blocked {
+  border: 1px solid var(--danger);
+  background: #fdecea;
+  color: var(--danger);
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+.swarm-blocked ul { margin: 6px 0 0 16px; }
+
+/* Tarea actual del dron: pedido y fase concreta, destacados sobre el resto
+   de la ficha porque es lo que se mira durante un reparto. */
+.swarm-task {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  margin: 8px 0;
+  background: #fff;
+  border-left: 3px solid var(--primary);
+}
+
+.swarm-task .st-order {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.swarm-task .st-detail {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Secciones plegables: el <h3> es la cabecera y abre/cierra su bloque. */
+h3.collapsible {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+h3.collapsible:hover { color: var(--primary); }
+
+h3.collapsible .chevron {
+  font-size: 10px;
+  color: var(--text-muted);
+  width: 10px;
+}
+
+.collapsible-body { padding-top: 8px; }
+
+/* Aclaracion de que es el escenario operacional. */
+.scenario-help {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+
+/* Aviso de coordenadas de parking que no coinciden con el mapa. */
+.scenario-mismatch {
+  font-size: 11px;
+  color: var(--danger);
+  background: #fdecea;
+  border-left: 3px solid var(--danger);
+  padding: 6px 8px;
+  margin-top: 6px;
+}
+
+#scenario-parking select {
+  width: 100%;
+  padding: 8px;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+/* El navegador dibuja un rectangulo de foco alrededor del SVG al clicar una
+   forma de Leaflet. En un circulo queda un cuadrado que lo envuelve y no
+   aporta nada: las formas del mapa no se navegan por teclado. */
+.leaflet-interactive:focus,
+.leaflet-container path:focus {
+  outline: none;
+}
+
+/* ── Plantillas de niveles de vuelo ───────────────────────────────────── */
+#fl-select {
+  width: 100%;
+  padding: 8px;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.fl-fields {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.fl-fields label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.fl-fields input {
+  width: 100%;
+  padding: 5px;
+  font-size: 12px;
+}
+
+.fl-chart {
+  width: 100%;
+  height: auto;
+  background: linear-gradient(#eaf3fb, #ffffff 70%, #f4ece7);
+  border: 1px solid var(--panel-border);
+  display: block;
+}
+
+.fl-legend {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: 6px 0 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+
+.fl-key {
+  display: inline-block;
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.fl-warn {
+  display: block;
+  width: 100%;
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* Indicador del volumen operacional, fijo arriba en el centro del mapa.
+   Sustituye al tooltip que seguia al raton por el perimetro: interesa saber
+   siempre dentro de que geovalla se trabaja, no etiquetar una linea. */
+.geofence-badge {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid #43a047;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.geofence-badge.inactive { border-color: #9e9e9e; }
+.geofence-badge span { color: var(--text-muted); }
+.geofence-badge .gb-on { color: #43a047; font-weight: 600; }
+.geofence-badge .gb-off { color: #9e9e9e; font-style: italic; }
+
+/* Enlace con aspecto de botón secundario (la consola se abre en otra pestaña). */
+a.boton-enlace {
+  display: inline-block; margin-top: 6px; padding: 6px 12px; font-size: 11px;
+  font-weight: bold; text-transform: uppercase; text-decoration: none;
+  color: var(--primary); background: #fff; border: 1px solid var(--primary);
+}
+a.boton-enlace:hover { background: #f0f0f0; }

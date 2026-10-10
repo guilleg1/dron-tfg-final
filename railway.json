@@ -1,0 +1,9 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "deploy": {
+    "startCommand": "uvicorn airdrop.api.main:app --host 0.0.0.0 --port $PORT",
+    "healthcheckPath": "/api/admin/needs-setup",
+    "healthcheckTimeout": 120,
+    "restartPolicyType": "ON_FAILURE"
+  }
+}

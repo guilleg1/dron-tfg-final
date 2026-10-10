@@ -1,0 +1,3 @@
+# Portal conectado a Mission Planner / SITL por dronLink (vendor/).
+-r api.txt
+pymavlink

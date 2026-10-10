@@ -1,0 +1,13 @@
+# Dependencias del portal web, las que instala Railway.
+# Es una copia plana de requirements/sitl.txt (api.txt, core.txt y pymavlink): el
+# portal en la nube vuela autopilotos SITL por MAVLink. El constructor de Railway
+# solo copia este fichero antes de instalar, así que no puede incluir otros con -r.
+# Si cambias alguno de esos ficheros, cambia también este.
+numpy
+scipy
+fastapi>=0.115
+uvicorn[standard]>=0.30
+sqlalchemy>=2.0
+psycopg2-binary>=2.9
+geopy>=2.4
+pymavlink
