@@ -6,6 +6,19 @@ enjambre de manera segura.
 
 **Portal en vivo:** https://tfg-drones.up.railway.app/ (Railway, con cuatro autopilotos ArduCopter en SITL; ver [docs/swarm/NUBE.md](docs/swarm/NUBE.md))
 
+## Vídeos
+
+El sistema en funcionamiento, sin necesidad de instalar nada:
+
+| Vídeo | Contenido | Duración |
+|---|---|---|
+| [V1. Portal del cliente](https://youtu.be/lem7ygXZAeA) | Alta de una cuenta, solicitud de un envío y seguimiento del pedido en el mapa hasta la entrega, con la telemetría del dron a la vista. | 4:27 |
+| [V2. Panel del operador](https://drive.google.com/file/d/1vQfdiQoBGMOcU8IBFdzywC7rYxdUrqSc/view) | Escenarios de rutas y creación de un corredor, escenario operacional, pestaña de enjambre, consola de simulación y una oleada completa en vuelo. | 17:27 |
+| [V3. Cuatro escenarios](https://youtu.be/6KWxxDFkX1Y) | El mismo enjambre se traslada a Castelldefels, Gavà, Viladecans y la jaula del DroneLab cambiando solo el escenario activo. | 1:17 |
+| [V4. Demostración en local](https://youtu.be/aql8CtqSu3g) | Cuatro instancias de SITL arrancadas en el PC, el portal conectado a ellas, el reparto lanzado desde el panel y el mismo vuelo seguido en Mission Planner. | 5:04 |
+| [V5. Despliegue en Railway](https://youtu.be/G2UCM77pIiU) | Servicios del proyecto, configuración del despliegue, registros de compilación y de arranque con los SITL y sus conexiones, métricas y base de datos. | 10:08 |
+| [V6. Pasarela y puente](https://youtu.be/VEZp7EhWh3E) | Los SITL de un PC conectados al portal desplegado mediante el puente, con el origen de los drones cambiado en el panel y el reparto en marcha. | 4:23 |
+
 ## Estructura
 
 El repositorio está dividido en cuatro zonas por ciclo de vida.
